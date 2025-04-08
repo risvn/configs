@@ -1,0 +1,10 @@
+#!/bin/bash
+read -s -p "Enter password: " PASSWORD
+echo
+
+for file in * ; do 
+if [ -d "${file}" ] ; then
+zip -r -P "$PASSWORD" "${file%/}.zip" "${file}";
+
+fi
+done
