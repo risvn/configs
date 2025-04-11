@@ -1,4 +1,4 @@
-# 🛠️ My Dotfiles
+# 🛠️ My Dotfiles/configs
 
 A curated collection of configuration files for a clean, fast, and productive development environment.  
 This includes settings for **Neovim**, **Tmux**, **Fish shell**, and various handy **shell scripts**.
