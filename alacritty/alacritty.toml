@@ -1,0 +1,25 @@
+# alacritty.toml (minimal + transparent)
+
+[window]
+opacity = 0.8
+dimensions = { columns = 100, lines = 30 }
+padding = { x = 10, y = 10 }
+decorations = "Full"
+startup_mode = "Windowed"
+
+[font]
+normal = { family = "monospace", style = "Regular" }
+size = 16.0
+
+[colors.primary]
+background = "0x000000"
+foreground = "0xffffff"
+
+[cursor]
+style = "Block"
+blink_interval = 500
+
+
+[terminal.shell]
+program = "/bin/fish" # or "/bin/bash" or "fish"
+
