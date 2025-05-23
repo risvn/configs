@@ -1,5 +1,30 @@
 #!/bin/bash
 
+# ================================================
+# Script: rename
+# Description: Renames all files in a given directory by
+#              appending a leader name and a padded index.
+#
+# Usage:
+#   ./rename <directory> <leader_name>
+#
+# Parameters:
+#   <directory>   - Path to the directory containing files to rename
+#   <leader_name> - The prefix to use for each renamed file
+#
+# What it does:
+#   - Goes through all files (not subdirectories) in the specified directory
+#   - Renames each file to <leader_name>_XXX.ext (e.g., Leader_001.jpg)
+#   - Preserves the original file extensions
+#   - Outputs the renaming progress to the terminal
+#
+# Example:
+#   $ ./rename ./images Leader
+#   Renaming './images/pic.jpg' to 'Leader_001.jpg'...
+#   Renaming './images/photo.png' to 'Leader_002.png'...
+#   Renaming complete. Total files renamed: 2
+# ================================================
+
 # Check for required arguments
 if [ $# -ne 2 ]; then
   echo "Usage: $0 <directory> <leader_name>"
