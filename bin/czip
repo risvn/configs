@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# ================================================
+# Script: czip 
+# Description: Zips all directories in the current folder
+#              with password protection.
+#
+# Usage:
+#   ./czip
+#
+# What it does:
+#   - Prompts you to enter a password (hidden input)
+#   - Recursively zips each directory in the current folder
+#     using the entered password
+#   - Outputs the name of each directory being zipped
+#
+# Requirements:
+#   - `zip` must be installed on your system
+#
+# Example:
+#   $ ./czip
+#   Enter password: ******
+#   Zipping directory 'photos' to 'photos.zip'...
+#   Zipping directory 'docs' to 'docs.zip'...
+#   All directories have been zipped.
+# ================================================
+
+read -s -p "Enter password: " PASSWORD
+echo
+
+for file in * ; do 
+  if [ -d "${file}" ] ; then
+    echo "Zipping directory '${file}' to '${file%/}.zip'..."
+    zip -r -P "$PASSWORD" "${file%/}.zip" "${file}"
+  fi
+done
+
+echo "All directories have been zipped."
+
