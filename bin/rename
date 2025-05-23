@@ -15,7 +15,11 @@ for f in "$dir"/*; do
   if [ -f "$f" ]; then
     ext="${f##*.}"  # Extract file extension
     new_name="${leader_name}_$(printf "%03d" $count).${ext}"
+    echo "Renaming '$f' to '$new_name'..."  # User interaction
     mv "$f" "$dir/$new_name"
     ((count++))
   fi
 done
+
+echo "Renaming complete. Total files renamed: $((count - 1))"
+
