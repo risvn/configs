@@ -33,3 +33,11 @@ Clone the repo:
 ```bash
 git clone https://github.com/risvn/configs.git
 cd configs
+```
+
+## 🖥️ My Neovim + Tmux Workflow
+
+Here's a quick peek at my terminal-based development environment using Tmux and Neovim:
+
+![Terminal Setup](screenshots/Screenshot_1.png)
+
