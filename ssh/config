@@ -1,0 +1,20 @@
+Host nord2
+    HostName 192.168.81.161
+    Port 8022                      # or 8022 if you set that on server
+    User u0_a272
+    IdentityFile ~/.ssh/nord2_ssh    # path to your private key for this server
+
+
+Host nord
+    HostName 192.168.81.90
+    Port 8022                      # or 8022 if you set that on server
+    User u0_a350
+    IdentityFile ~/.ssh/nord    # path to your private key for this server
+
+
+
+
+Host raspberrypi
+    HostName 192.168.81.107
+    User rsvn
+    IdentityFile ~/.ssh/pi    # path to your private key for this server
