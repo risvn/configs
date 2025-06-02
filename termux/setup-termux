@@ -1,0 +1,103 @@
+#!/bin/bash
+
+#----------------------------------------------------------------------------------------------------
+# This script sets up a Termux development environment by:
+# 1. Updating package lists
+# 2. Setting up storage permissions
+# 3. Installing essential packages (git, python, vim, tmux, termux-api, wget)
+# 4. Cloning a configuration repository to ~/.config
+# 5. Creating symlinks for config files (e.g., .vimrc, .zshrc, .bashrc, .tmux) from ~/.config/<tool>/
+#----------------------------------------------------------------------------------------------------
+
+# Exit on any error
+set -e
+
+# Update package lists
+echo "Updating package lists..."
+pkg upgrade -y || {
+    echo "Error: Failed to update package lists"
+    exit 1
+}
+
+# Set up storage (inform user if manual action is needed)
+echo "Checking storage setup..."
+if [ ! -d "$HOME/storage" ]; then
+    echo "Running termux-setup-storage (may require user interaction)"
+    termux-setup-storage
+fi
+
+# Install packages
+packages=(git python vim tmux termux-api wget)
+for package in "${packages[@]}"; do
+    echo "Installing $package..."
+    pkg install "$package" -y || {
+        echo "Error: Failed to install $package"
+        exit 1
+    }
+done
+echo "Packages installed successfully"
+
+# Clone repository
+repo_url="https://github.com/risvn/configs.git"
+repo_name="configs"
+clone_dir="$HOME/$repo_name"
+
+echo "Cloning repository from $repo_url..."
+if ! git clone "$repo_url" "$clone_dir"; then
+    echo "Error: Failed to clone repository"
+    exit 1
+fi
+echo "Repository cloned to $clone_dir"
+
+# Set up config directory
+config_dir="$HOME/.config"
+echo "Setting up configuration directory at $config_dir..."
+
+# Move cloned repository to .config
+if [ -d "$config_dir" ]; then
+    echo "Warning: $config_dir already exists, merging contents..."
+    mv "$clone_dir"/* "$config_dir/" || {
+        echo "Error: Failed to move files to $config_dir"
+        exit 1
+    }
+    rm -rf "$clone_dir"
+else
+    mv "$clone_dir" "$config_dir" || {
+        echo "Error: Failed to move $clone_dir to $config_dir"
+        exit 1
+    }
+fi
+
+# Define configuration files to find and their target names
+config_files=(".vimrc" ".zshrc" ".bashrc" ".tmux.conf") # Adjust as needed
+
+# Create symlinks
+echo "Creating symlinks..."
+
+for file in "${config_files[@]}"; do
+    # Find the file in $config_dir (search recursively)
+    source_file=$(find "$config_dir" -type f -name "$file" -print -quit)
+    target_file="$HOME/$file"
+
+    # Check if source file was found
+    if [ -z "$source_file" ]; then
+        echo "Warning: $file not found in $config_dir, skipping..."
+        continue
+    }
+
+    # Check if target already exists
+    if [ -e "$target_file" ] || [ -L "$target_file" ]; then
+        echo "Warning: $target_file already exists, backing up..."
+        mv "$target_file" "${target_file}.bak" || {
+            echo "Error: Failed to back up $target_file"
+            exit 1
+        }
+    }
+
+    echo "🔗 Linking $target_file → $source_file"
+    ln -sfn "$source_file" "$target_file" || {
+        echo "Error: Failed to create symlink for $file"
+        exit 1
+    }
+done
+echo "Your development environment has been configured successfully!  --rsvn"
