@@ -1,8 +1,13 @@
-Host github.com
+
+# ~/.ssh/config
+
+Host gh
   HostName github.com
   User git
   IdentityFile ~/.ssh/private/id_rsa
-  IdentitiesOnly yes
+  Compression yes
+  ControlMaster yes
+  ControlPersist 1h
 
 
 Host nord2
