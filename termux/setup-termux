@@ -18,7 +18,7 @@
 set -e
 
 #enter the config file names that has to have sym-link
-config_files=(".vimrc" ".zshrc" ".bashrc" ".tmux.conf")
+config_files=(".vimrc" ".zshrc" ".bashrc" ".tmux.conf" )
 # Update package lists
 echo "Updating package lists..."
 pkg upgrade -y || {
@@ -35,7 +35,7 @@ fi
 
 
 # Install packages
-packages=(git python vim tmux termux-api wget rsync)
+packages=(git python vim tmux termux-api wget rsync nmap)
 for package in "${packages[@]}"; do
     echo "Installing $package..."
     pkg install "$package" -y || {
