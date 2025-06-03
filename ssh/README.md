@@ -33,6 +33,11 @@ ssh-copy-id -i ~/.ssh/[yourkey].pub user@remote_ip
 ```
 ## **🛠️ Step 3: Configure the Remote SSH Daemon (sshd\_config)**
 
+
+try to login with the private-key
+```bash
+ssh -i ~/.ssh/private -p 8022 usr_name@id
+```
 On the remote server, edit the SSH daemon configuration file:
 ```bash
 sudo nano /etc/ssh/sshd_config

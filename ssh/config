@@ -13,14 +13,14 @@ Host gh
 Host nord2
     HostName 192.168.81.161
     Port 8022                      # or 8022 if you set that on server
-    User u0_a272
+    User u0_a280
     IdentityFile ~/.ssh/private/nord2_ssh    # path to your private key for this server
 
 
 Host nord
     HostName 192.168.81.90
     Port 8022                      # or 8022 if you set that on server
-    User u0_a350
+    User u0_a262
     IdentityFile ~/.ssh/private/nord    # path to your private key for this server
 
 
