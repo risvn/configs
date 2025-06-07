@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# -------------------------------------------------------------------
+# rrm -(recursive remove) A safe script to delete files or directories passed as arguments.
+# essentially a remove cmd wrapper with more saftey and more verbose
+# Usage:
+# First argument is assumed to be flags (-r,-f)
+#   ./rrm [OPTIONS] file1 file2 dir1 ...
+#
+# -------------------------------------------------------------------
+flag="$1"
+
+for item in "$@"; do
+  if [ -e "$item" ]; then
+    read -p "Are you sure you want to delete $item [Press N to cancel] : " answer
+    case $answer in 
+     [nN])
+
+        echo "skipped the $item"
+     ;;
+       *)
+        rm $flag -v "$item"
+        echo "$item is removed"
+     ;;
+    esac
+  else
+    echo "Warning: '$item' does not exist!"
+  fi
+done
+
+
