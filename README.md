@@ -41,3 +41,9 @@ Here's a quick peek at my terminal-based development environment using Tmux and 
 
 ![Terminal Setup](screenshots/Screenshot_1.png)
 
+## Installation 
+make the setup script executable and run it
+```bash
+chmod +x setup
+./setup
+```

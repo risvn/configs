@@ -1,0 +1,67 @@
+#!/bin/bash
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------------
+# This script sets up a  development environment by:
+# Setting up storage permissions
+# Cloning a configuration repository to ~/.config
+# Creating symlinks for config files (e.g., .vimrc, .zshrc, .bashrc, .tmux) from ~/.config/<tool>/
+#-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+set -e
+
+#enter the config file names that has to have sym-link
+config_files=(".vimrc" ".zshrc" ".bashrc" ".tmux.conf" "bin")
+
+# Clone repository
+repo_url="https://github.com/risvn/configs.git"
+repo_name="configs"
+clone_dir="$HOME/$repo_name"
+
+echo "Cloning repository from $repo_url..."
+if ! git clone "$repo_url" "$clone_dir"; then
+    echo "Error: Failed to clone repository"
+    exit 1
+fi
+echo "Repository cloned to $clone_dir"
+
+
+# Move configs to ~/.config
+src_dir="$HOME/configs"
+config_dir="$HOME/.config"
+
+echo "Setting up configuration directory at $config_dir..."
+mkdir -p "$config_dir"
+# Use rsync to merge contents, preserving existing files
+rsync -a --ignore-existing "$src_dir/" "$config_dir/" || {
+    echo "Error: Failed to merge files to $config_dir"
+    exit 1
+}
+rm -rf "$src_dir"
+
+echo "creating symlinks"
+
+for file in "${config_files[@]}"; do
+    # Find the file in $config_dir
+    source_file=$(find "$config_dir" -name "$file" -print -quit)
+    target_file="$HOME/$file"
+
+    if [ -z "$source_file" ]; then
+        echo "Warning: $file not found in $config_dir, skipping"
+        continue
+    fi
+
+    echo " Linking $target_file → $source_file"
+    ln -sfn "$source_file" "$target_file"
+done
+ 
+for script in $HOME/bin/* ; do
+  chmod +x "$script"
+  echo "changing "$script" to executable"
+done
+
+
+echo "your dev environment configured successfully!    --rsvn"
+
+
+
+
