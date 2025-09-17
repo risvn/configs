@@ -1,0 +1,92 @@
+#!/bin/bash
+
+# ========================================
+# TAR Splitter & Joiner
+# Author: Wan
+# Usage:
+#   ./tar_splitter.sh -s <file_or_dir> <size_in_MB>
+#   ./tar_splitter.sh -j <tar_file_prefix>
+# ========================================
+
+set -e  # exit on error
+
+show_help() {
+  cat << EOF
+📖 Usage:
+  ./tar_splitter.sh [OPTION] [ARGS]
+
+Options:
+  -s <file_or_dir> <size_in_MB>   Create a tar archive and split into chunks
+                                  Example: ./tar_splitter.sh -s myfolder 2000
+
+  -j <tar_file_prefix>            Join parts back into a tar archive and extract
+                                  Example: ./tar_splitter.sh -j myfolder.tar
+
+  --help                          Show this help message
+
+Notes:
+  - Splits are saved as: <tar_file>.part-000, part-001, ...
+  - To manually rejoin:
+        cat <tar_file>.part-* > <tar_file>
+        tar -xvf <tar_file>
+EOF
+}
+
+# No args → show help
+if [ $# -lt 1 ]; then
+  show_help
+  exit 1
+fi
+
+case "$1" in
+  -s)
+    # Split mode
+    if [ $# -ne 3 ]; then
+      echo " Error: Missing arguments for split"
+      echo "Usage: ./tar_splitter.sh -s <file_or_dir> <size_in_MB>"
+      exit 1
+    fi
+    file=$2
+    split_size=$3
+    tar_file="${file}.tar"
+
+    echo " Creating tar file: $tar_file"
+    tar -cvf "$tar_file" "$file"
+
+    echo "✂️  Splitting $tar_file into ${split_size}MB chunks..."
+    split -b "${split_size}M" -d -a 3 "$tar_file" "${tar_file}.part-"
+
+    echo " Split complete!"
+    ls -lh ${tar_file}.part-*
+    ;;
+
+  -j)
+    # Join mode
+    if [ $# -ne 2 ]; then
+      echo " Error: Missing arguments for join"
+      echo "Usage: ./tar_splitter.sh -j <tar_file_prefix>"
+      exit 1
+    fi
+    prefix=$2
+    tar_file="$prefix"
+
+    echo " Joining parts into: $tar_file"
+    cat ${tar_file}.part-* > "$tar_file"
+
+    echo " Extracting $tar_file"
+    tar -xvf "$tar_file"
+
+    echo " Join & extract complete!"
+    ;;
+
+  --help)
+    show_help
+    ;;
+
+  *)
+    echo " Unknown option: $1"
+    show_help
+    exit 1
+    ;;
+esac
+
