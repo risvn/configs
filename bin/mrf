@@ -1,0 +1,96 @@
+###############################################
+#   MRF (make rar files) 
+#
+# Compress every directory in the current folder
+# into a separate split-volume RAR archive.
+#
+# Features:
+#   - Processes ONLY directories (not files)
+#   - Creates output_dir/<folder>.rar
+#   - Splits volumes (default 1900 MB)
+#   - Uses recursive mode (-r)
+#   - Safe for spaces in folder names
+#
+# Usage:
+#   ./rar_split.sh
+#   ./rar_split.sh -o output_directory
+#   ./rar_split.sh -s 1500       # change split size
+#   ./rar_split.sh -h
+###############################################
+
+# Default settings
+OUTPUT_DIR="out"
+SPLIT_SIZE="1900"   # in MB
+
+# ============================
+# Show Help Message
+# ============================
+show_help() {
+    echo "RAR Folder Splitter Script"
+    echo
+    echo "Usage: $0 [options]"
+    echo
+    echo "Options:"
+    echo "  -o <dir>     Set output directory (default: out)"
+    echo "  -s <size>    Split size in MB (default: 1900)"
+    echo "  -h, --help   Show this help message"
+    echo
+    echo "Example:"
+    echo "  $0 -o archives -s 1800"
+    echo
+    exit 0
+}
+
+# ============================
+# Parse Arguments
+# ============================
+while [[ "$#" -gt 0 ]]; do
+    case "$1" in
+        -o)
+            OUTPUT_DIR="$2"
+            shift 2
+            ;;
+        -s)
+            SPLIT_SIZE="$2"
+            shift 2
+            ;;
+        -h|--help)
+            show_help
+            ;;
+        *)
+            echo "Unknown option: $1"
+            echo "Use --help for usage."
+            exit 1
+            ;;
+    esac
+done
+
+# Create base output directory
+mkdir -p "$OUTPUT_DIR"
+
+echo "Output directory    : $OUTPUT_DIR"
+echo "Split size (MB)     : $SPLIT_SIZE"
+echo "Starting compression..."
+echo
+
+# ============================
+# Main Loop
+# ============================
+for f in */; do
+    name="${f%/}"   # remove trailing slash
+
+    echo "📁 Processing folder: $name"
+
+    # Make folder inside output dir
+    TARGET_DIR="${OUTPUT_DIR}/${name}"
+    mkdir -p "$TARGET_DIR"
+
+    # RAR command
+    rar a -r -v"${SPLIT_SIZE}m" "$TARGET_DIR/${name}.rar" "$name"
+
+    echo "✔ Done: $TARGET_DIR/${name}.rar"
+    echo
+done
+
+echo "🎉 All folders compressed successfully!"
+
