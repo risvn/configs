@@ -1,11 +1,7 @@
-# 🛠️ My Dotfiles/configs
-
-A curated collection of configuration files for a clean, fast, and productive development environment.  
-This includes settings for **Neovim**, **Tmux**, **Fish shell**, and various handy **shell scripts**.
 
 ---
 
-## 📦 Contents
+## Just config files for some programs that I actively use.
 
 | Component   | Description                                      |
 |-------------|--------------------------------------------------|
@@ -16,17 +12,17 @@ This includes settings for **Neovim**, **Tmux**, **Fish shell**, and various han
 
 ---
 
-## 🚀 Features
+## Requirements 
 
-- 🧠 IDE-like **Neovim** with LSP, auto-complete, and Treesitter
-- 🔄 Seamless **Tmux** keybindings and session management
-- 🐟 Friendly and fast **Fish** shell with useful aliases and functions
-- 📜 Collection of small utility **shell scripts** for daily use
-- 🔧 Designed to be modular and easy to install across devices
+* neovim
+* fish
+* tmux 1.8+
+* Git
+* Any Linux distribution 
+* Internet connection
 
 ---
-
-## 🧰 Installation
+##  Installation
 
 Clone the repo:
 
@@ -35,7 +31,6 @@ git clone https://github.com/risvn/configs.git
 cd configs
 ```
 
-## 🖥️ My Neovim + Tmux Workflow
 
 Here's a quick peek at my terminal-based development environment using Tmux and Neovim:
 
