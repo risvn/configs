@@ -14,6 +14,14 @@ return {
     vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
     vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
     vim.keymap.set('n', '<C-p>', builtin.git_files, {})
+    vim.keymap.set('n', '<leader>fj', builtin.lsp_document_symbols,
+        { desc = 'Telescope document symbols' })
+
+    vim.keymap.set('n', '<leader>fo', function()
+        vim.cmd("vsplit")
+        builtin.lsp_document_symbols()
+        end, { desc = 'Document symbols in split' })
+
     vim.keymap.set('n', '<leader>fs', function()
       builtin.grep_string({ search = vim.fn.input("Grep > ") })
         end)
