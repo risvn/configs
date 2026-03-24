@@ -4,7 +4,7 @@
 Host gh
   HostName github.com
   User git
-  IdentityFile ~/.ssh/private/id_rsa
+  IdentityFile ~/.ssh/id_rsa
   Compression yes
   ControlMaster yes
   ControlPersist 1h

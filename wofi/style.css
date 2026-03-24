@@ -1,0 +1,36 @@
+window {
+    background-color: rgba(29, 32, 33, 0.7); /* #1d2021 with transparency */
+    border: 2px solid #3c3836;
+    border-radius: 10px;
+    padding: 8px;
+}
+
+#outer-box {
+    margin: 4px;
+}
+
+#input {
+    margin-bottom: 6px;
+    padding: 6px;
+    border: none;
+    outline: none;
+    background-color: rgba(60, 56, 54, 0.7); /* #3c3836 */
+    color: #ebdbb2;
+    border-radius: 6px;
+}
+
+#entry {
+    padding: 6px;
+    border-radius: 6px;
+    color: #ebdbb2;
+}
+
+#entry:selected {
+    background-color: rgba(60, 56, 54, 0.7);
+    color: #fbf1c7;
+}
+
+#entry:urgent {
+    background-color: rgba(204, 36, 29, 0.7); /* #cc241d */
+    color: #fbf1c7;
+}
