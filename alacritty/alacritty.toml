@@ -1,13 +1,38 @@
 [window]
-opacity = 0.69
+opacity = 0.75
 dimensions = { columns = 100, lines = 30 }
 padding = { x = 5, y = 5 }
 decorations = "Full"
 startup_mode = "Windowed"
 
+#[font]
+#normal = { family = "monospace", style = "Regular" }
+#bold = { family = "monospace", style = "bold" }
+#size = 10.0
+
+
+#[font]
+## Normal font
+#normal = { family = "JetBrains Mono", style = "Regular" }
+#
+## Bold font
+#bold = { family = "JetBrains Mono", style = "Bold" }
+#
+## Italic fonts (optional)
+#italic = { family = "JetBrains Mono", style = "Italic" }
+#bold_italic = { family = "JetBrains Mono", style = "Bold Italic" }
+#
+## Font size (adjust to your preference)
+#size = 10.0
+
+
 [font]
-normal = { family = "monospace", style = "Regular" }
-size = 10.0
+normal = { family = "Fira Code", style = "Regular" }
+bold = { family = "Fira Code", style = "Bold" }
+italic = { family = "Fira Code", style = "Italic" }
+bold_italic = { family = "Fira Code", style = "Bold Italic" }
+size = 9
+
 
 [colors.primary]
 background = "0x000000"

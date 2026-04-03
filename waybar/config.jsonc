@@ -9,7 +9,10 @@
     "margin-left": 2,
 
     "modules-left": [
-        "hyprland/workspaces",
+    "hyprland/workspaces",
+    "custom/player",
+     "custom/visualizer",
+
     ],
 
     "modules-center": [
@@ -18,7 +21,6 @@
 
 
  "modules-right": [
-            "mpd",
         "network",
         "power-profiles-daemon",
         "cpu",
@@ -49,6 +51,19 @@
              "default": ""
          }
      },
+
+
+
+
+
+
+
+
+
+
+
+
+
 
    "mpd": {
         "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
@@ -115,17 +130,16 @@
     },
 
 
-   "network": {
-        // "interface": "wlp2*", // (Optional) To force the use of this interface
-        "format-wifi": " {essid} {bandwidthDownBits} ",
-        "format-ethernet": "{ipaddr}/{cidr} 󰊗",
-        "tooltip-format": "{ifname} via {gwaddr} 󰊗",
-        "format-linked": "{ifname} (No IP) 󰊗",
-        "format-disconnected": "Disconnected ⚠",
-        "format-alt": "{ifname}: {ipaddr}/{cidr}"
+ "network": {
+        "format-wifi": "   {bandwidthDownBits}",
+        "format-ethernet": "",
+        "format-disconnected": "", 
+        "max-length": 50,
+        "on-click": "hyprctl dispatch exec [float] 'kitty -e nmtui'",
     },
 
-    "backlight": {
+
+     "backlight": {
         "format": "{icon}  {percent}%",
 	"format-icons": [""]
     },
@@ -153,6 +167,23 @@
         //"on-click": "pavucontrol",
         "tooltip": false
     },
+
+
+"custom/visualizer": {
+    "exec": "~/.config/waybar/scripts/muviz.sh",
+    "return-type": "json"
+},
+
+
+  "custom/player": {
+    "exec": "playerctl metadata --format ' {{ artist }} - {{ title }}' 2>/dev/null || echo ' No music'",
+    "interval": 2,
+    "return-type": "text",
+    "on-click": "playerctl play-pause",
+    "on-scroll-up": "playerctl next",
+    "on-scroll-down": "playerctl previous"
+      },
+
      "custom/power": {
         "format" : "⏻ ",
 		"tooltip": false,
